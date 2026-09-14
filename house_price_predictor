@@ -1,0 +1,29 @@
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+data = {
+    'square_feet': [1500, 1800, 2400, 3000, 1200],
+    'bedrooms': [3, 3, 4, 4, 2],
+    'price': [300000, 350000, 480000, 600000, 240000]
+}
+df=pd.DataFrame(data)
+print(df)
+
+X=df[['square_feet','bedrooms']]
+y=df['price']
+
+model = LinearRegression()
+model.fit(X,y)
+
+print("=== House Price Prediction Model ===")
+
+try:
+    user_sqft = float(input("Enter the square footage: "))
+    user_beds = int(input("Enter the number of bedrooms: "))
+
+    new_house = pd.DataFrame([[user_sqft,user_beds]],columns=['square_feet','bedrooms'])
+    predicted_price = model.predict(new_house)
+
+    print(f"\nPredicted Price for your house: ${predicted_price[0]:,.2f}")
+
+except ValueError:
+    print("Enter Valid Values!")
