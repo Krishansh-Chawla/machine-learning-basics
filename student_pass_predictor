@@ -1,0 +1,24 @@
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+
+data = {
+    'study_hours': [1.0, 1.5, 2.0, 3.0, 4.5, 5.0, 6.0, 7.0],
+    'passed': [0, 0, 0, 0, 1, 1, 1, 1]  # 0 = Fail, 1 = Pass
+}
+
+df = pd.DataFrame(data)
+
+X = df[['study_hours']]
+y = df['passed']
+
+model = LogisticRegression()
+model.fit(X, y)
+
+sh=eval(input("Enter study hours: "))
+
+study_time = pd.DataFrame([[sh]], columns=['study_hours'])
+prediction = model.predict(study_time)
+probability = model.predict_proba(study_time)
+
+result = "Passed" if prediction[0] == 1 else "Failed"
+print(f"Prediction for {sh} hours: {result} (Probability of passing: {probability[0][1]:.2f})")
